@@ -48,7 +48,7 @@ const login = async (req, res) => {
             maxAge:60 * 60 * 24,
             httpOnly: true,
         })
-        res.send({accessToken})
+        res.send({accessToken, refreshToken})
         user = {...currUser};
     }catch(err) {
         console.log(err);
@@ -73,7 +73,7 @@ const logout = async (req, res) => {
         cookie.serialize("refreshToken", "", {
             httpOnly: true,
             maxAge: 0,
-            domain: 'doc-tasks-front.vercel.app',
+            domain: 'https://doc-tasks-front.vercel.app',
             sameSite: 'None',
             secure: true
         })
