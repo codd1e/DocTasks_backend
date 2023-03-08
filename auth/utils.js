@@ -26,7 +26,7 @@ const verifyAuthorizationMiddleware = (req, res, next) => {
 
 const verifyRefreshTokenMiddleware = (req, res, next) => {
     const refreshToken = req.cookies.refreshToken;
-
+    console.log(req.cookies)
     if (!refreshToken) {
         return res.sendStatus(401);
     }
