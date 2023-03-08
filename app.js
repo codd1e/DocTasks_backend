@@ -8,13 +8,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({
-    credentials: true,
-    methods: ["POST", "GET", "PATCH", "DELETE"],
-    origin: ['https://doc-tasks-front.vercel.app/'],
-    allowedHeaders: ['Content-Type','Authorization', 'contenttype'],
-    exposedHeaders: []
-}))
+app.use(cors())
 app.use(authRouter)
 
 const start = async () => {
