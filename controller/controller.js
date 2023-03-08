@@ -38,7 +38,8 @@ const login = async (req, res) => {
             "Set-Cookie",
             cookie.serialize("refreshToken", refreshToken, {
                 httpOnly: true,
-                maxAge: refreshTokenAge
+                maxAge: refreshTokenAge,
+                domain: 'doc-tasks-front.vercel.app'
             })
         )
         res.cookie('refreshToken', refreshToken, {
@@ -70,6 +71,7 @@ const logout = async (req, res) => {
         cookie.serialize("refreshToken", "", {
             httpOnly: true,
             maxAge: 0,
+            domain: 'doc-tasks-front.vercel.app'
         })
     )
     res.cookie('refreshToken', "", {
