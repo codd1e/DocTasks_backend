@@ -41,6 +41,10 @@ const login = async (req, res) => {
                 maxAge: refreshTokenAge
             })
         )
+        res.cookie('refreshToken', refreshToken, {
+            maxAge:60 * 60 * 24,
+            httpOnly: true,
+        })
         res.send({accessToken})
         user = {...currUser};
     }catch(err) {
@@ -68,6 +72,10 @@ const logout = async (req, res) => {
             maxAge: 0,
         })
     )
+    res.cookie('refreshToken', "", {
+        maxAge: 0,
+        httpOnly: true,
+    })
     res.sendStatus(200);
 }
 const loadProjects = async (req, res) => {
