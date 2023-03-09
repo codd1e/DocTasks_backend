@@ -9,18 +9,12 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: ["http://localhost:3000"],
+    origin: ["http://localhost:3000", "http://localhost:3000/sign"],
     credentials: true,
     methods: ["POST", "GET", "PATCH", "DELETE"],
     allowedHeaders: ['Content-Type','Authorization', 'contenttype'],
     exposedHeaders: []
 }))
-app.use((req,res,next)=>{
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    next();
-})
 app.use(authRouter)
 
 const start = async () => {
