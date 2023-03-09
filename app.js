@@ -9,6 +9,11 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
+    origin: ["https://doc-tasks-front.vercel.app/",
+        "https://doc-tasks-front.vercel.app/sign",
+        "https://doctasks-back.onrender.com",
+        "https://doctasks-back.onrender.com/login",
+    ],
     credentials: true
 }))
 app.use(authRouter)
