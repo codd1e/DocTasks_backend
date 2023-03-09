@@ -11,10 +11,11 @@ app.use(cookieParser());
 app.use(cors({
     origin: ["https://doc-tasks-front.vercel.app/",
         "https://doc-tasks-front.vercel.app/sign",
-        "https://doctasks-back.onrender.com",
-        "https://doctasks-back.onrender.com/login",
     ],
-    credentials: true
+    credentials: true,
+    methods: ["POST", "GET", "PATCH", "DELETE"],
+    allowedHeaders: ['Content-Type','Authorization', 'contenttype'],
+    exposedHeaders: []
 }))
 app.use((req,res,next)=>{
     res.setHeader('Access-Control-Allow-Origin', '*');
