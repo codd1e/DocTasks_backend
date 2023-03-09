@@ -9,7 +9,6 @@ const corsOptions = {
     origin: ['http://localhost:3000'], // домен сервиса, с которого будут приниматься запросы
     credentials: true,
     methods: ["POST", "GET", "PATCH", "DELETE"],
-    allowedHeaders: ['Content-Type','Authorization', 'contenttype'],
 }
 app.use(express.json());
 app.use(cookieParser());
