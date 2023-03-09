@@ -5,12 +5,12 @@ const cors = require("cors")
 const mongoose = require("mongoose");
 
 const app = express();
-app.options('*', cors(corsOptions))
 const corsOptions = {
     origin: ['https://doc-tasks-front.vercel.app'], // домен сервиса, с которого будут приниматься запросы
     credentials: true,
     headers: {"Access-Control-Allow-Origin": "https://doc-tasks-front.vercel.app"}
 }
+app.options('*', cors(corsOptions))
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors(corsOptions))
