@@ -14,18 +14,18 @@ const corsOptions = {
 }
 const authRouter = express.Router();
 
-authRouter.post('/login', cors(corsOptions), login)
+authRouter.post('/login', login)
 
-authRouter.get('/profile', cors(corsOptions), verifyAuthorizationMiddleware, getProfile)
+authRouter.get('/profile', verifyAuthorizationMiddleware, getProfile)
 
-authRouter.post('/updateDocumentation', cors(corsOptions), updateDocumentation)
+authRouter.post('/updateDocumentation', updateDocumentation)
 
-authRouter.get('/logout', cors(corsOptions), logout)
+authRouter.get('/logout', logout)
 
-authRouter.get('/projects', cors(corsOptions), loadProjects)
+authRouter.get('/projects', loadProjects)
 
-authRouter.get('/documentation', cors(corsOptions), loadDocumentation)
+authRouter.get('/documentation', loadDocumentation)
 
-authRouter.get("/refresh", cors(corsOptions), verifyRefreshTokenMiddleware, refresh);
+authRouter.get("/refresh", verifyRefreshTokenMiddleware, refresh);
 
 module.exports = authRouter;
