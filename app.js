@@ -9,7 +9,7 @@ const corsOptions = {
     origin: ['http://localhost:3000', 'https://doc-tasks-front.vercel.app/'], // домен сервиса, с которого будут приниматься запросы
     credentials: true,
     methods: ["POST", "GET", "PATCH", "DELETE"],
-    allowedHeaders: ['Access-Control-Allow-Origin', 'Content-Type', "Authorization"],
+    headers: {"Access-Control-Allow-Origin": "https://doc-tasks-front.vercel.app/"}
 }
 app.use(express.json());
 app.use(cookieParser());
