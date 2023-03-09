@@ -8,7 +8,10 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors())
+app.use(cors({
+    origin: 'https://doc-tasks-front.vercel.app/',
+    credentials: true
+}))
 app.use(authRouter)
 
 const start = async () => {
