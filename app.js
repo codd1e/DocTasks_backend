@@ -9,9 +9,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: ["https://doctasks-back.onrender.com/login",
-        "https://doctasks-back.onrender.com",
-    ],
+    origin: ["http://localhost:5000"],
     credentials: true,
     methods: ["POST", "GET", "PATCH", "DELETE"],
     allowedHeaders: ['Content-Type','Authorization', 'contenttype'],
