@@ -6,9 +6,8 @@ const mongoose = require("mongoose");
 
 const app = express();
 const corsOptions = {
-    origin: ['https://doc-tasks-front.vercel.app'], // домен сервиса, с которого будут приниматься запросы
+    origin: false, // домен сервиса, с которого будут приниматься запросы
     credentials: true,
-    headers: {"Access-Control-Allow-Origin": "https://doc-tasks-front.vercel.app"}
 }
 app.options('*', cors(corsOptions))
 app.use(express.json());
@@ -20,7 +19,7 @@ app.use(authRouter)
 const start = async () => {
     try {
         await mongoose.connect(process.env.MONGO_URL);
-        app.listen(process.env.PORT | '5000', () => {
+        app.listen( 5000, () => {
             console.log(`Server started`)
         })
     } catch (e) {
