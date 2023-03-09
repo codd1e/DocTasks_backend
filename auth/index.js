@@ -10,6 +10,7 @@ const corsOptions = {
     credentials: true,
     methods: ["POST", "GET", "PATCH", "DELETE"],
     allowedHeaders: ['Access-Control-Allow-Origin', 'Content-Type', "Authorization"],
+    headers: {"Access-Control-Allow-Origin": "https://doc-tasks-front.vercel.app"}
 }
 const authRouter = express.Router();
 
