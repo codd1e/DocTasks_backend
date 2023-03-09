@@ -6,8 +6,10 @@ const {
 } = require("./utils");
 const cors = require('cors')
 const corsOptions = {
-    origin: ['https://doc-tasks-front.vercel.app/','https://doc-tasks-front.vercel.app/sign'], // домен сервиса, с которого будут приниматься запросы
+    origin: ['http://localhost:3000'], // домен сервиса, с которого будут приниматься запросы
     credentials: true,
+    methods: ["POST", "GET", "PATCH", "DELETE"],
+    allowedHeaders: ['Content-Type','Authorization', 'contenttype'],
 }
 const authRouter = express.Router();
 
