@@ -6,7 +6,7 @@ const {
 } = require("./utils");
 const cors = require('cors')
 const corsOptions = {
-    origin: false, // домен сервиса, с которого будут приниматься запросы
+    origin: ['https://doc-tasks-front.vercel.app', 'https://doc-tasks-front.vercel.app/sign'], // домен сервиса, с которого будут приниматься запросы
     credentials: true,
     methods: ["POST", "GET", "PATCH", "DELETE"],
     // allowedHeaders: ['Access-Control-Allow-Origin', 'Content-Type', "Authorization"],
