@@ -37,7 +37,8 @@ const login = async (req, res) => {
             "Set-Cookie",
             cookie.serialize("refreshToken", refreshToken, {
                 maxAge: 24 * 60 * 60,
-                httpOnly: true
+                httpOnly: true,
+                sameSite: 'strict'
             })
         );
         res.send({accessToken, refreshToken})
