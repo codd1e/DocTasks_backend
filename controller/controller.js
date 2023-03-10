@@ -61,7 +61,7 @@ const getProfile = async (req, res) => {
     const post = user.post;
     const team = user.team;
     const avatar = user.avatar;
-    res.send({login, role});
+    res.send({login, role, post, team, avatar});
 }
 
 const refresh = async (req, res) => {
