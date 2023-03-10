@@ -59,7 +59,7 @@ const login = async (req, res) => {
 }
 
 const getProfile = async (req, res) => {
-    const name = user.name;
+    const name = user.login;
     const role = user.role;
     const post = user.post;
     const team = user.team;
