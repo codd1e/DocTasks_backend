@@ -49,6 +49,9 @@ const login = async (req, res) => {
         user = {
             name: currUser.login,
             role: currUser.role,
+            post: currUser.post,
+            team: currUser.team,
+            avatar: currUser.avatar
         };
     }catch(err) {
         console.log(err);
@@ -56,12 +59,12 @@ const login = async (req, res) => {
 }
 
 const getProfile = async (req, res) => {
-    const login = user.name;
+    const name = user.name;
     const role = user.role;
     const post = user.post;
     const team = user.team;
     const avatar = user.avatar;
-    res.send({login, role, post, team, avatar});
+    res.send({name, role, post, team, avatar});
 }
 
 const refresh = async (req, res) => {
