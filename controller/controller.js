@@ -6,7 +6,13 @@ const MongoClient = require("mongodb").MongoClient;
 const url = process.env.MONGO_URL
 const mongoClient = new MongoClient(url);
 
-let user = {}
+let user = {
+    name: '',
+    role: '',
+    post: '',
+    team: '',
+    avatar: ''
+}
 const login = async (req, res) => {
     const {login, password} = req.body;
     try {
@@ -40,15 +46,21 @@ const login = async (req, res) => {
             })
         );
         res.send({accessToken, refreshToken})
-        user = {...currUser};
+        user = {
+            name: currUser.login,
+            role: currUser.role,
+        };
     }catch(err) {
         console.log(err);
     }
 }
 
 const getProfile = async (req, res) => {
-    const login = user.login;
+    const login = user.name;
     const role = user.role;
+    const post = user.post;
+    const team = user.team;
+    const avatar = user.avatar;
     res.send({login, role});
 }
 
