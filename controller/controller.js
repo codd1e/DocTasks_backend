@@ -33,7 +33,6 @@ const login = async (req, res) => {
             })
         }
         const {accessToken, refreshToken} = getTokens(login)
-        res.header("Access-Control-Allow-Origin", "*");
         res.setHeader(
             "Set-Cookie",
             cookie.serialize("refreshToken", refreshToken, {
