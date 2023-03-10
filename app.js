@@ -9,8 +9,8 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: ['http://localhost:3000', 'http://localhost:3000/sign', 'https://doc-tasks-front.vercel.app', 'https://doc-tasks-front.vercel.app/sign']
-    methods: ['POST', 'GET', 'PUT'],
+    origin: ['http://localhost:3000', 'http://localhost:3000/sign', 'https://doc-tasks-front.vercel.app', 'https://doc-tasks-front.vercel.app/sign'],
+    methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
 }))
 app.use(authRouter)
 
