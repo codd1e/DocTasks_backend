@@ -7,6 +7,7 @@ const url = process.env.MONGO_URL
 const mongoClient = new MongoClient(url);
 
 let user = {
+    login: '',
     name: '',
     role: '',
     post: '',
@@ -43,10 +44,14 @@ const login = async (req, res) => {
             "Set-Cookie",
             cookie.serialize("refreshToken", refreshToken, {
                 maxAge: 24 * 60 * 60,
+                httpOnly: true,
+                secure: true,
+                sameSite: 'none'
             })
         );
         res.send({accessToken, refreshToken})
         user = {
+            login: currUser.login,
             name: currUser.login,
             role: currUser.role,
             post: currUser.post,
@@ -59,12 +64,13 @@ const login = async (req, res) => {
 }
 
 const getProfile = async (req, res) => {
+    const login = user.login
     const name = user.login;
     const role = user.role;
     const post = user.post;
     const team = user.team;
     const avatar = user.avatar;
-    res.send({name, role, post, team, avatar});
+    res.send({login, role, post, team, avatar});
 }
 
 const refresh = async (req, res) => {
