@@ -45,7 +45,8 @@ const login = async (req, res) => {
             cookie.serialize("refreshToken", refreshToken, {
                 maxAge: 60,
                 httpOnly: true,
-                sameSite: 'none'
+                sameSite: 'none',
+                secure: true
             })
         );
         res.send({accessToken, refreshToken})
@@ -78,7 +79,8 @@ const logout = async (req, res) => {
         cookie.serialize("refreshToken", "", {
             httpOnly: true,
             maxAge: 0,
-            sameSite: 'none'
+            sameSite: 'none',
+            secure: true
         })
     );
     res.sendStatus(200);
