@@ -83,9 +83,6 @@ const logout = async (req, res) => {
         "Set-Cookie",
         cookie.serialize("refreshToken", "", {
             maxAge: 0,
-            httpOnly: true,
-            secure: true,
-            sameSite: 'none'
         })
     );
     res.sendStatus(200);
