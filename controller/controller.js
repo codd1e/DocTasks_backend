@@ -88,7 +88,7 @@ const refresh = async (req, res) => {
         "Set-Cookie",
         cookie.serialize("refreshToken", refreshToken, {
             httpOnly: true,
-            maxAge: 1000 * 60 * 60,
+            maxAge: 60,
         })
     );
     res.send({ accessToken });
