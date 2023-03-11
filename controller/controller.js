@@ -75,6 +75,7 @@ const logout = async (req, res) => {
     res.setHeader(
         "Set-Cookie",
         cookie.serialize("refreshToken", "", {
+            httpOnly: true,
             maxAge: 0,
         })
     );
@@ -82,7 +83,14 @@ const logout = async (req, res) => {
 }
 
 const refresh = async (req, res) => {
-    const { accessToken } = getTokens(req.user.login);
+    const { accessToken, refreshToken } = getTokens(req.user.login);
+    res.setHeader(
+        "Set-Cookie",
+        cookie.serialize("refreshToken", refreshToken, {
+            httpOnly: true,
+            maxAge: 1000 * 60 * 60,
+        })
+    );
     res.send({ accessToken });
 }
 
