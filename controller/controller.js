@@ -43,7 +43,7 @@ const login = async (req, res) => {
         res.setHeader(
             "Set-Cookie",
             cookie.serialize("refreshToken", refreshToken, {
-                maxAge: 60,
+                maxAge: 60 * 60,
                 httpOnly: true,
                 sameSite: 'none',
                 secure: true
@@ -92,7 +92,7 @@ const refresh = async (req, res) => {
         "Set-Cookie",
         cookie.serialize("refreshToken", refreshToken, {
             httpOnly: true,
-            maxAge: 60,
+            maxAge: 60 * 60,
         })
     );
     res.send({ accessToken });
