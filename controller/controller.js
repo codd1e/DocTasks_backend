@@ -40,15 +40,13 @@ const login = async (req, res) => {
             })
         }
         const {accessToken, refreshToken} = getTokens(login)
-        // res.setHeader(
-        //     "Set-Cookie",
-        //     cookie.serialize("refreshToken", refreshToken, {
-        //         maxAge: 24 * 60 * 60,
-        //         httpOnly: true,
-        //         secure: true,
-        //         sameSite: 'none'
-        //     })
-        // );
+        res.setHeader(
+            "Set-Cookie",
+            cookie.serialize("refreshToken", refreshToken, {
+                maxAge: 60,
+                httpOnly: true,
+            })
+        );
         res.send({accessToken, refreshToken})
         user = {
             login: currUser.login,
@@ -73,20 +71,21 @@ const getProfile = async (req, res) => {
     res.send({login, role, post, team, avatar});
 }
 
+const logout = async (req, res) => {
+    res.setHeader(
+        "Set-Cookie",
+        cookie.serialize("refreshToken", "", {
+            maxAge: 0,
+        })
+    );
+    res.sendStatus(200);
+}
+
 const refresh = async (req, res) => {
     const { accessToken } = getTokens(req.user.login);
     res.send({ accessToken });
 }
 
-const logout = async (req, res) => {
-    // res.setHeader(
-    //     "Set-Cookie",
-    //     cookie.serialize("refreshToken", "", {
-    //         maxAge: 0,
-    //     })
-    // );
-    res.sendStatus(200);
-}
 const loadProjects = async (req, res) => {
     try {
         await mongoClient.connect();
