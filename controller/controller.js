@@ -40,15 +40,15 @@ const login = async (req, res) => {
             })
         }
         const {accessToken, refreshToken} = getTokens(login)
-        res.setHeader(
-            "Set-Cookie",
-            cookie.serialize("refreshToken", refreshToken, {
-                maxAge: 24 * 60 * 60,
-                httpOnly: true,
-                secure: true,
-                sameSite: 'none'
-            })
-        );
+        // res.setHeader(
+        //     "Set-Cookie",
+        //     cookie.serialize("refreshToken", refreshToken, {
+        //         maxAge: 24 * 60 * 60,
+        //         httpOnly: true,
+        //         secure: true,
+        //         sameSite: 'none'
+        //     })
+        // );
         res.send({accessToken, refreshToken})
         user = {
             login: currUser.login,
@@ -79,12 +79,12 @@ const refresh = async (req, res) => {
 }
 
 const logout = async (req, res) => {
-    res.setHeader(
-        "Set-Cookie",
-        cookie.serialize("refreshToken", "", {
-            maxAge: 0,
-        })
-    );
+    // res.setHeader(
+    //     "Set-Cookie",
+    //     cookie.serialize("refreshToken", "", {
+    //         maxAge: 0,
+    //     })
+    // );
     res.sendStatus(200);
 }
 const loadProjects = async (req, res) => {
