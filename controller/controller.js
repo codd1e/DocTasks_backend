@@ -137,4 +137,47 @@ const updateDocumentation = async (req, res) => {
     }
 }
 
-module.exports = {login, getProfile, logout, loadProjects, loadDocumentation, updateDocumentation, refresh};
+const getTasksList = async (req, res) => {
+    try {
+        await mongoClient.connect();
+        const db = mongoClient.db("mySystem");
+        const collection = db.collection("tasks");
+        const results = await collection.find().toArray();
+        res.send(results);
+
+    }catch(err) {
+        console.log(err);
+    }
+}
+
+const addTask = async (req, res) => {
+    try {
+        const {id, previewName, description, status} = req.body;
+        await mongoClient.connect();
+        const db = mongoClient.db("mySystem");
+        const taskListCollection = db.collection("tasks");
+        const taskDetailsCollection = db.collection('tasksDetails');
+        await taskListCollection.insertOne({id: id, previewName: previewName, status: status})
+        await taskDetailsCollection.insertOne({id: id, previewName: previewName, description: description, timeSpent: '', jobDescription: '', status: status})
+        const results = await taskListCollection.find().toArray();
+        res.send(results);
+    } catch (err) {
+
+    }
+}
+
+async function getTaskDetails (req, res) {
+
+    try {
+        await mongoClient.connect();
+        const db = mongoClient.db("mySystem");
+        const collection = db.collection("tasksDetails");
+        const results = await collection.findOne({id: req.body.id});
+        res.send(results);
+
+    }catch(err) {
+        console.log(err);
+    }
+}
+
+module.exports = {login, getProfile, logout, loadProjects, loadDocumentation, updateDocumentation, refresh, getTasksList, addTask, getTaskDetails};
