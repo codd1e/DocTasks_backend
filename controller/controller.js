@@ -52,7 +52,7 @@ const login = async (req, res) => {
         res.send({accessToken, refreshToken})
         user = {
             login: currUser.login,
-            name: currUser.login,
+            name: currUser.name,
             role: currUser.role,
             post: currUser.post,
             team: currUser.team,
@@ -65,12 +65,12 @@ const login = async (req, res) => {
 
 const getProfile = async (req, res) => {
     const login = user.login
-    const name = user.login;
+    const name = user.name;
     const role = user.role;
     const post = user.post;
     const team = user.team;
     const avatar = user.avatar;
-    res.send({login, role, post, team, avatar});
+    res.send({login, name, role, post, team, avatar});
 }
 
 const logout = async (req, res) => {
@@ -152,13 +152,13 @@ const getTasksList = async (req, res) => {
 
 const addTask = async (req, res) => {
     try {
-        const {id, previewName, description, status} = req.body;
+        const {id, previewName, description, responsible, status} = req.body;
         await mongoClient.connect();
         const db = mongoClient.db("mySystem");
         const taskListCollection = db.collection("tasks");
         const taskDetailsCollection = db.collection('tasksDetails');
-        await taskListCollection.insertOne({id: id, previewName: previewName, status: status})
-        await taskDetailsCollection.insertOne({id: id, previewName: previewName, description: description, timeSpent: '', jobDescription: '', status: status})
+        await taskListCollection.insertOne({id: id, previewName: previewName, responsible: responsible, status: status})
+        await taskDetailsCollection.insertOne({id: id, previewName: previewName, description: description, timeSpent: '', jobDescription: '',  status: status, responsible: responsible,})
         const results = await taskListCollection.find().toArray();
         res.send(results);
     } catch (err) {
@@ -180,4 +180,20 @@ async function getTaskDetails (req, res) {
     }
 }
 
-module.exports = {login, getProfile, logout, loadProjects, loadDocumentation, updateDocumentation, refresh, getTasksList, addTask, getTaskDetails};
+const getResponsible = async (req, res) => {
+    try {
+        await mongoClient.connect();
+        const db = mongoClient.db("mySystem");
+        const collection = db.collection("users");
+        const results = await collection.find().toArray();
+        const usersNames = results.map((user) => {
+            return {name: user['name']}
+        })
+        res.send(usersNames);
+
+    }catch(err) {
+        console.log(err);
+    }
+}
+
+module.exports = {login, getProfile, logout, loadProjects, loadDocumentation, updateDocumentation, refresh, getTasksList, addTask, getTaskDetails, getResponsible};
