@@ -1,5 +1,5 @@
 const express = require('express');
-const {login, getProfile, logout, loadProjects, loadDocumentation, updateDocumentation, refresh, getTasksList, addTask, getTaskDetails, getResponsible} = require('../controller/controller')
+const {login, getProfile, logout, loadProjects, loadDocumentation, updateDocumentation, refresh, getTasksList, addTask, getTaskDetails, getResponsible, updateTaskDetails} = require('../controller/controller')
 const {
     verifyAuthorizationMiddleware,
     verifyRefreshTokenMiddleware,
@@ -28,5 +28,7 @@ authRouter.post('/add_task', addTask);
 authRouter.post('/taskDetails', getTaskDetails)
 
 authRouter.get('/getResponsible', getResponsible)
+
+authRouter.post('/taskDetailsUpdate', updateTaskDetails)
 
 module.exports = authRouter;

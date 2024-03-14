@@ -196,4 +196,20 @@ const getResponsible = async (req, res) => {
     }
 }
 
-module.exports = {login, getProfile, logout, loadProjects, loadDocumentation, updateDocumentation, refresh, getTasksList, addTask, getTaskDetails, getResponsible};
+const updateTaskDetails = async (req, res) => {
+    const {id, timeSpent, jobDescription, status} = req.body;
+    try {
+        await mongoClient.connect();
+        const db = mongoClient.db("mySystem");
+        const collection = db.collection("tasksDetails");
+        await collection.updateOne({id: id}, {$set: {timeSpent: timeSpent, jobDescription: jobDescription, status: status}});
+        const listCollection = db.collection('tasks')
+        await listCollection.updateOne({id: id}, {$set: {status: status}});
+        res.send(req.body);
+
+    }catch(err) {
+        console.log(err);
+    }
+}
+
+module.exports = {login, getProfile, logout, loadProjects, loadDocumentation, updateDocumentation, refresh, getTasksList, addTask, getTaskDetails, getResponsible, updateTaskDetails};
