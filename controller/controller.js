@@ -251,19 +251,41 @@ const getResponsible = async (req, res) => {
 }
 
 const updateTaskDetails = async (req, res) => {
-    const {id, timeSpent, jobDescription, status} = req.body;
+    const {id, previewName, description, timeSpent, jobDescription, status} = req.body;
     try {
         await mongoClient.connect();
         const db = mongoClient.db("mySystem");
-        const collection = db.collection("tasksDetails");
-        await collection.updateOne({id: id}, {$set: {timeSpent: timeSpent, jobDescription: jobDescription, status: status}});
-        const listCollection = db.collection('tasks')
-        await listCollection.updateOne({id: id}, {$set: {status: status}});
-        res.send(req.body);
+        const collection = db.collection("tasks");
+        await collection.findOneAndUpdate({id: id}, {$set: {previewName: previewName, status: status}});
+        const listCollection = db.collection('tasksDetails')
+        await listCollection.findOneAndUpdate({id: id}, {$set: req.body})
+        return res.send(req.body)
 
     }catch(err) {
         console.log(err);
     }
 }
 
-module.exports = {register, login, getProfile, logout, loadProjects, loadDocumentation, updateDocumentation, refresh, getTasksList, addTask, getTaskDetails, getResponsible, updateTaskDetails, deleteUser};
+const deleteTask = async (req, res) => {
+    const {id, previewName, description, timeSpent, jobDescription, status} = req.body;
+    try {
+        await mongoClient.connect();
+        const db = mongoClient.db("mySystem");
+        const collection = db.collection("tasks");
+        const task = await collection.findOne({id: id})
+        if (!task) {
+            return res.status(400).json({
+                message: 'Задача не найдена',
+            });
+        }
+        await collection.deleteOne({id: id});
+        const listCollection = db.collection('tasksDetails')
+        await listCollection.deleteOne({id: id})
+        return res.sendStatus(200)
+
+    }catch(err) {
+        console.log(err);
+    }
+}
+
+module.exports = {register, login, getProfile, logout, loadProjects, loadDocumentation, updateDocumentation, refresh, getTasksList, addTask, getTaskDetails, getResponsible, updateTaskDetails, deleteUser, deleteTask};
