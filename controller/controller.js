@@ -152,6 +152,20 @@ const refresh = async (req, res) => {
     res.send({ accessToken });
 }
 
+const addProject = async (req, res) => {
+    try {
+        const {title, sub} = req.body;
+        await mongoClient.connect();
+        const db = mongoClient.db("mySystem");
+        const collection = db.collection("projects");
+        await collection.insertOne({title: title, sub: sub})
+        const results = await collection.find().toArray();
+        res.send(results);
+    } catch (err) {
+
+    }
+}
+
 const loadProjects = async (req, res) => {
     try {
         await mongoClient.connect();
@@ -164,6 +178,28 @@ const loadProjects = async (req, res) => {
         console.log(err);
     }
 }
+
+const deleteProject = async (req, res) => {
+    const {id} = req.body;
+    try {
+        await mongoClient.connect();
+        const db = mongoClient.db("mySystem");
+        const collection = db.collection("projects");
+        const hasProject = await collection.findOne({id: id});
+        if (!hasProject) {
+            return res.status(400).json({
+                message: 'Проект не найден',
+            });
+        }
+        await collection.deleteOne({id: id})
+        return res.status(200).json({
+            message: 'Проект успешно удален'
+        })
+    }catch(err) {
+        console.log(err);
+    }
+}
+
 const loadDocumentation = async (req, res) => {
     try {
         await mongoClient.connect();
@@ -288,4 +324,4 @@ const deleteTask = async (req, res) => {
     }
 }
 
-module.exports = {register, login, getProfile, logout, loadProjects, loadDocumentation, updateDocumentation, refresh, getTasksList, addTask, getTaskDetails, getResponsible, updateTaskDetails, deleteUser, deleteTask};
+module.exports = {register, login, getProfile, logout, loadProjects, loadDocumentation, updateDocumentation, refresh, getTasksList, addTask, getTaskDetails, getResponsible, updateTaskDetails, deleteUser, deleteTask, addProject, deleteProject};

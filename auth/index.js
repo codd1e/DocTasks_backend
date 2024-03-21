@@ -1,5 +1,5 @@
 const express = require('express');
-const {login, getProfile, logout, loadProjects, loadDocumentation, updateDocumentation, refresh, getTasksList, addTask, getTaskDetails, getResponsible, updateTaskDetails, register, deleteUser, deleteTask} = require('../controller/controller')
+const {login, getProfile, logout, loadProjects, loadDocumentation, updateDocumentation, refresh, getTasksList, addTask, getTaskDetails, getResponsible, updateTaskDetails, register, deleteUser, deleteTask, addProject, deleteProject} = require('../controller/controller')
 const {
     verifyAuthorizationMiddleware,
     verifyRefreshTokenMiddleware,
@@ -19,7 +19,11 @@ authRouter.put('/updateDocumentation', updateDocumentation);
 
 authRouter.get('/logout', logout);
 
+authRouter.post('/projects', addProject);
+
 authRouter.get('/projects', loadProjects);
+
+authRouter.delete('/deleteProject', deleteProject);
 
 authRouter.get('/documentation', loadDocumentation);
 
