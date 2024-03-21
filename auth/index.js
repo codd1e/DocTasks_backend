@@ -1,5 +1,5 @@
 const express = require('express');
-const {login, getProfile, logout, loadProjects, loadDocumentation, updateDocumentation, refresh, getTasksList, addTask, getTaskDetails, getResponsible, updateTaskDetails} = require('../controller/controller')
+const {login, getProfile, logout, loadProjects, loadDocumentation, updateDocumentation, refresh, getTasksList, addTask, getTaskDetails, getResponsible, updateTaskDetails, register, deleteUser} = require('../controller/controller')
 const {
     verifyAuthorizationMiddleware,
     verifyRefreshTokenMiddleware,
@@ -8,6 +8,10 @@ const {
 const authRouter = express.Router();
 
 authRouter.post('/login', login);
+
+authRouter.post('/createUser', register);
+
+authRouter.delete('/user', deleteUser);
 
 authRouter.get('/profile', verifyAuthorizationMiddleware, getProfile);
 

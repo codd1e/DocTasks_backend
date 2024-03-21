@@ -14,6 +14,39 @@ let user = {
     team: '',
     avatar: ''
 }
+const register = async (req, res) => {
+    const {login, password, name, role, post, team, avatar} = req.body;
+    try {
+        await mongoClient.connect();
+        const db = mongoClient.db("mySystem");
+        const collection = db.collection("users");
+        const hash = crypto
+            .createHmac("sha256", passwordSecret)
+            .update(password)
+            .digest("hex")
+        const hasUserName = await collection.findOne({login: login});
+        if (hasUserName) {
+            return res.status(400).json({
+                message: 'Пользователь с таким логином уже есть в системе',
+            });
+        }
+        user = {
+            login: login,
+            passwordHash: hash,
+            name: name,
+            role: role,
+            post: post,
+            team: team,
+            avatar: avatar
+        };
+        await collection.insertOne(user)
+        res.send(user)
+    }catch(err) {
+        console.log(err);
+    }
+}
+
+
 const login = async (req, res) => {
     const {login, password} = req.body;
     try {
@@ -58,6 +91,27 @@ const login = async (req, res) => {
             team: currUser.team,
             avatar: currUser.avatar
         };
+    }catch(err) {
+        console.log(err);
+    }
+}
+
+const deleteUser = async (req, res) => {
+    const {login} = req.body;
+    try {
+        await mongoClient.connect();
+        const db = mongoClient.db("mySystem");
+        const collection = db.collection("users");
+        const hasUserName = await collection.findOne({login: login});
+        if (!hasUserName) {
+            return res.status(400).json({
+                message: 'Пользователь не найден',
+            });
+        }
+        await collection.deleteOne({login: login})
+        return res.status(200).json({
+            message: 'Пользователь успешно удален'
+        })
     }catch(err) {
         console.log(err);
     }
@@ -212,4 +266,4 @@ const updateTaskDetails = async (req, res) => {
     }
 }
 
-module.exports = {login, getProfile, logout, loadProjects, loadDocumentation, updateDocumentation, refresh, getTasksList, addTask, getTaskDetails, getResponsible, updateTaskDetails};
+module.exports = {register, login, getProfile, logout, loadProjects, loadDocumentation, updateDocumentation, refresh, getTasksList, addTask, getTaskDetails, getResponsible, updateTaskDetails, deleteUser};
