@@ -40,7 +40,7 @@ const register = async (req, res) => {
             avatar: avatar
         };
         await collection.insertOne(user)
-        res.send(user)
+        res.send({...user, password: password})
     }catch(err) {
         console.log(err);
     }
