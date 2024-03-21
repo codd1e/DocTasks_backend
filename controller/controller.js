@@ -180,18 +180,18 @@ const loadProjects = async (req, res) => {
 }
 
 const deleteProject = async (req, res) => {
-    const {id} = req.body;
+    const {_id} = req.body;
     try {
         await mongoClient.connect();
         const db = mongoClient.db("mySystem");
         const collection = db.collection("projects");
-        const hasProject = await collection.findOne({id: id});
+        const hasProject = await collection.findOne({_id: _id});
         if (!hasProject) {
             return res.status(400).json({
                 message: 'Проект не найден',
             });
         }
-        await collection.deleteOne({id: id})
+        await collection.deleteOne({_id: _id})
         return res.status(200).json({
             message: 'Проект успешно удален'
         })
